@@ -13,20 +13,11 @@ let package = Package(
     products: [
         .library(
             name: "JSONSupport",
-            targets: ["JSONSupport"]),
-    ],
-    dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", .upToNextMinor(from: "1.8.1")),
-        .package(url: "https://github.com/nashysolutions/foundation-dependencies.git", .upToNextMinor(from: "4.0.0"))
+            targets: ["JSONSupport"]
+        )
     ],
     targets: [
-        .target(
-            name: "JSONSupport",
-            dependencies: [
-                .product(name: "Dependencies", package: "swift-dependencies"),
-                .product(name: "FoundationDependencies", package: "foundation-dependencies"),
-            ]
-        ),
+        .target(name: "JSONSupport"),
         .testTarget(
             name: "JSONSupportTests",
             dependencies: ["JSONSupport"]

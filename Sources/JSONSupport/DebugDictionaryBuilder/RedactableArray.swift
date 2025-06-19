@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Foundation
-
 /// A type-erased array wrapper that supports redacted debug output.
 public struct RedactableArray: DebugRedactable {
     

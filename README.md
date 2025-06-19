@@ -1,5 +1,8 @@
 # json-support
 
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fnashysolutions%2Fjson-support%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/nashysolutions/json-support)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fnashysolutions%2Fjson-support%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/nashysolutions/json-support)
+
 A lightweight Swift package for bundling, inspecting, and pretty-printing JSON dictionaries.
 
 This package includes:

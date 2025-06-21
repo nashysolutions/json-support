@@ -42,7 +42,7 @@ public extension DebugRedactable {
     ///   - dictionary: The original dictionary containing potentially sensitive values.
     ///   - parentKeys: A set of parent keys that should also be redacted.
     /// - Returns: A dictionary with redacted values replaced with `"[REDACTED]"`.
-    func redact(_ dictionary: [String: Any], including parentKeys: Set<String>) -> [String: Any] {
+    func redactedDebugDictionary(_ dictionary: [String: Any], including parentKeys: Set<String>) -> [String: Any] {
         let redactedKeys = Self.redactedDebugKeys.union(parentKeys)
 
         return dictionary.reduce(into: [String: Any]()) { result, pair in
@@ -78,7 +78,7 @@ public extension DebugRedactable {
                 result[key] = "null"
 
             case let dict as [String: Any]:
-                result[key] = redact(dict, including: redactedKeys)
+                result[key] = redactedDebugDictionary(dict, including: redactedKeys)
 
             case let array as [Any]:
                 result[key] = array.map { element in
@@ -111,6 +111,33 @@ public extension DebugRedactable {
             default:
                 result[key] = String(describing: value)
             }
+        }
+    }
+}
+
+public extension DebugRedactable {
+
+    /// Builds a redacted debug dictionary for a wrapped error,
+    /// using its `DebugDescribable` output if available.
+    ///
+    /// - Parameters:
+    ///   - label: A context label prefixing the error.
+    ///   - error: The wrapped error value.
+    ///   - parentKeys: Inherited redaction keys.
+    /// - Returns: A dictionary containing a single `underlyingError` key.
+    func redactedDebugDictionaryForError(
+        label: String,
+        error: Error,
+        key: String = "underlyingError",
+        redacting parentKeys: Set<String>
+    ) -> [String: Any] {
+        let merged = mergedRedactedKeys(parentKeys)
+
+        if let describable = error as? DebugDescribable {
+            return [key: describable.debugDictionary(redacting: merged)]
+        } else {
+            let description = String(reflecting: error)
+            return [key: "\(label): \(description)"]
         }
     }
 }

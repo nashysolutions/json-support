@@ -11,6 +11,11 @@ import Foundation
 ///
 /// Conforming types define which keys should be redacted and provide a dictionary representation
 /// of their internal state suitable for debugging and logging.
+///
+/// - Important:
+/// Implementations of `debugDictionary(redacting:)` must NOT access `debugDescription`
+/// (directly or indirectly), as it leads to infinite recursion (if this happens, we break out of the loop for
+/// you and print a log to the debugger).
 public protocol DebugRedactable {
     
     /// A set of keys that should be redacted by default when generating debug output.
